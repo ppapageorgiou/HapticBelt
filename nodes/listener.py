@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 import roslib; roslib.load_manifest('ChapticBelt')
 import rospy
+import bluetooth
+from bluetooth import *
 from ChapticBelt.msg import data
 
+belt_addr="00:06:66:42:21:78"
+sock=bluetooth.BluetoothSocket( bluetooth.RFCOMM )
 
 def callback(data):
     angle=data.angle
@@ -17,11 +21,36 @@ def callback(data):
 	
 	btdata = [{"vib": vib, "inten": inten}]
 	rospy.loginfo(btdata)
+	
+	SendBtData(str(btdata))
 
 	return 1
     
     else:
+	
 	return 0
+
+
+def SendBtData(data):
+  
+    try:
+	sock.send(data)
+    except BluetoothError, e:
+	rospy.loginfo("Bluetooth Error: %s" % e)
+
+def ConnectBelt(addr):
+
+    port = 1
+           
+    try:
+        status=sock.connect((addr, port))
+	sock.send("CONNECTED with STATUS: %s" % status)
+	rospy.loginfo(status)
+    except BluetoothError, e:
+	rospy.loginfo("Bluetooth Error: %s" % e)
+
+    return 1
+    
 
 def CalcIntensity(dista):
 
@@ -68,6 +97,7 @@ def ChooseVibrator(angle):
 
 def listener():
     rospy.init_node('listener', anonymous=True)
+    ConnectBelt(belt_addr)
     rospy.Subscriber("BeltStream", data, callback)
     rospy.spin()
 

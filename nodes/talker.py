@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+#THIS MODULE IS JUST FOR TESTING OF THE LISTENER NODE
+
 import roslib; roslib.load_manifest('ChapticBelt')
 import rospy
 from ChapticBelt.msg import data
@@ -12,7 +15,7 @@ def talker():
 	msg.distance=18.4352435
         rospy.loginfo(msg)
         pub.publish(msg)
-        rospy.sleep(2.5)
+        rospy.sleep(0.1)
 if __name__ == '__main__':
     try:
         talker()
