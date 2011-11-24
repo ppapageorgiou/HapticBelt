@@ -3,3 +3,5 @@ NOTES
 
 This is a standard ROS package.
 Install as usual
+
+**Tested and working with a talker frequency of 100Hz with no dropout*** 
