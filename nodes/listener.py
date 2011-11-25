@@ -17,12 +17,15 @@ def callback(data):
     if (valid==2):
 
 	vib=ChooseVibrator(angle)
-	inten=CalcIntensity(dista)
+	inten=round(CalcIntensity(dista), 7)
 	
-	btdata = [{"vib": vib, "inten": inten}]
+	btdata = str(vib) + ";" + str(inten)	
+
+	#btdata = [{"vib": vib, "inten": inten}]
 	rospy.loginfo(btdata)
 	
-	SendBtData(str(btdata))
+	SendBtData(btdata)
+	
 
 	return 1
     

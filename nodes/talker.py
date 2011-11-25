@@ -15,7 +15,7 @@ def talker():
 	msg.distance=18.4352435
         rospy.loginfo(msg)
         pub.publish(msg)
-        rospy.sleep(0.1)
+        rospy.sleep(10)
 if __name__ == '__main__':
     try:
         talker()
